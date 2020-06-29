@@ -5,6 +5,7 @@ local hotkeys_popup = require('awful.hotkeys_popup').widget
 
 local modkey = require('configuration.keys.mod').modKey
 local altkey = require('configuration.keys.mod').altKey
+local ctlkey = require('configuration.keys.mod').ctlKey
 local apps = require('configuration.apps')
 -- Key bindings
 local globalKeys =
@@ -14,8 +15,8 @@ local globalKeys =
   -- Tag browsing
   awful.key({modkey}, 'w', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
   awful.key({modkey}, 's', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
-  awful.key({altkey, 'Control'}, 'Up', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
-  awful.key({altkey, 'Control'}, 'Down', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
+  awful.key({altkey, ctlkey}, 'Up', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
+  awful.key({altkey, ctlkey}, 'Down', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
   awful.key({modkey}, 'Escape', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
   -- Default client focus
   awful.key(
@@ -77,8 +78,8 @@ local globalKeys =
   ),
   -- Programms
   awful.key(
-    {modkey},
-    'l',
+    {modkey, ctlkey},
+    'q',
     function()
       awful.spawn(apps.default.lock)
     end,
@@ -101,7 +102,7 @@ local globalKeys =
     {description = 'Take a screenshot of your active monitor and copy it to clipboard', group = 'screenshots (clipboard)'}
   ),
   awful.key(
-    {'Control'},
+    {ctlkey},
     'Print',
     function()
       awful.util.spawn_with_shell(apps.default.region_screenshot)
@@ -142,11 +143,11 @@ local globalKeys =
     end,
     {description = 'open a terminal', group = 'launcher'}
   ),
-  awful.key({modkey, 'Control'}, 'r', _G.awesome.restart, {description = 'reload awesome', group = 'awesome'}),
-  awful.key({modkey, 'Control'}, 'q', _G.awesome.quit, {description = 'quit awesome', group = 'awesome'}),
+  awful.key({modkey, ctlkey}, 'r', _G.awesome.restart, {description = 'reload awesome', group = 'awesome'}),
+  awful.key({modkey, ctlkey}, 'q', _G.awesome.quit, {description = 'quit awesome', group = 'awesome'}),
   awful.key(
     {altkey, 'Shift'},
-    'Right',
+    'l',
     function()
       awful.tag.incmwfact(0.05)
     end,
@@ -154,7 +155,7 @@ local globalKeys =
   ),
   awful.key(
     {altkey, 'Shift'},
-    'Left',
+    'h',
     function()
       awful.tag.incmwfact(-0.05)
     end,
@@ -162,7 +163,7 @@ local globalKeys =
   ),
   awful.key(
     {altkey, 'Shift'},
-    'Down',
+    'j',
     function()
       awful.client.incwfact(0.05)
     end,
@@ -170,7 +171,7 @@ local globalKeys =
   ),
   awful.key(
     {altkey, 'Shift'},
-    'Up',
+    'k',
     function()
       awful.client.incwfact(-0.05)
     end,
@@ -178,7 +179,7 @@ local globalKeys =
   ),
   awful.key(
     {modkey, 'Shift'},
-    'Left',
+    'h',
     function()
       awful.tag.incnmaster(1, nil, true)
     end,
@@ -186,23 +187,23 @@ local globalKeys =
   ),
   awful.key(
     {modkey, 'Shift'},
-    'Right',
+    'l',
     function()
       awful.tag.incnmaster(-1, nil, true)
     end,
     {description = 'decrease the number of master clients', group = 'layout'}
   ),
   awful.key(
-    {modkey, 'Control'},
-    'Left',
+    {modkey, ctlkey},
+    'h',
     function()
       awful.tag.incncol(1, nil, true)
     end,
     {description = 'increase the number of columns', group = 'layout'}
   ),
   awful.key(
-    {modkey, 'Control'},
-    'Right',
+    {modkey, ctlkey},
+    'l',
     function()
       awful.tag.incncol(-1, nil, true)
     end,
@@ -225,7 +226,7 @@ local globalKeys =
     {description = 'select previous', group = 'layout'}
   ),
   awful.key(
-    {modkey, 'Control'},
+    {modkey, ctlkey},
     'n',
     function()
       local c = awful.client.restore()
@@ -240,7 +241,7 @@ local globalKeys =
   -- Dropdown application
   awful.key(
     {modkey},
-    'z',
+    '`',
     function()
       _G.toggle_quake()
     end,
@@ -272,7 +273,7 @@ local globalKeys =
     {},
     'XF86MonBrightnessUp',
     function()
-      awful.spawn('xbacklight -inc 10')
+      awful.spawn('ddcutil setvcp 10 + 10')
     end,
     {description = '+10%', group = 'hotkeys'}
   ),
@@ -280,11 +281,12 @@ local globalKeys =
     {},
     'XF86MonBrightnessDown',
     function()
-      awful.spawn('xbacklight -dec 10')
+      awful.spawn('ddcutil setvcp 10 - 10')
     end,
     {description = '-10%', group = 'hotkeys'}
   ),
   -- ALSA volume control
+  --[[ let pa-applet handle it
   awful.key(
     {},
     'XF86AudioRaiseVolume',
@@ -309,6 +311,7 @@ local globalKeys =
     end,
     {description = 'toggle mute', group = 'hotkeys'}
   ),
+  ]]
   awful.key(
     {},
     'XF86AudioNext',
@@ -358,7 +361,7 @@ local globalKeys =
   -- Custom hotkeys
   -- vfio integration
   awful.key(
-    {'Control',altkey},
+    {ctlkey,altkey},
     'space',
     function()
       awful.util.spawn_with_shell('vm-attach attach')
@@ -406,7 +409,7 @@ for i = 1, 9 do
     ),
     -- Toggle tag display.
     awful.key(
-      {modkey, 'Control'},
+      {modkey, ctlkey},
       '#' .. i + 9,
       function()
         local screen = awful.screen.focused()
@@ -433,7 +436,7 @@ for i = 1, 9 do
     ),
     -- Toggle tag on focused client.
     awful.key(
-      {modkey, 'Control', 'Shift'},
+      {modkey, ctlkey, 'Shift'},
       '#' .. i + 9,
       function()
         if _G.client.focus then
