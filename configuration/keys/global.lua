@@ -78,7 +78,7 @@ local globalKeys =
   ),
   -- Programms
   awful.key(
-    {modkey, ctlkey},
+    {altkey, ctlkey},
     'q',
     function()
       awful.spawn(apps.default.lock)
@@ -248,7 +248,8 @@ local globalKeys =
     {description = 'dropdown application', group = 'launcher'}
   ),
   -- Widgets popups
-  --[[awful.key(
+  --[[
+  awful.key(
     {altkey},
     'h',
     function()
@@ -267,7 +268,8 @@ local globalKeys =
       end
     end,
     {description = 'show weather', group = 'widgets'}
-  ),--]]
+  ),
+  --]]
   -- Brightness
   awful.key(
     {},

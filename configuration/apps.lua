@@ -32,6 +32,7 @@ return {
     'pa-applet', -- pulse audio
     'xfce4-power-manager', -- Power manager
     'systemctl --user start sxhkd',
+    'steam -silent',
     --'ibus-daemon --xim --daemonize', -- Ibus daemon for keyboard
 		--Gnome '/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)', -- credential manager
     --KDE '/usr/lib/x86_64-linux-gnu/libexec/polkit-kde-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)', -- credential manager
