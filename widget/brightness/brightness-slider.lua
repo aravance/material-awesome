@@ -16,15 +16,15 @@ local slider =
 slider:connect_signal(
   'property::value',
   function()
-    spawn('xbacklight -set ' .. math.max(slider.value, 5))
+    spawn('ddcutil setvcp 10 ' .. math.max(slider.value, 5))
   end
 )
 
 watch(
-  [[bash -c "xbacklight -get"]],
+  [[bash -c "ddcutil getvcp 10 2>/dev/null"]],
   1,
   function(widget, stdout, stderr, exitreason, exitcode)
-    local brightness = string.match(stdout, '(%d+)')
+    local brightness = string.match(stdout, 'current value = +(%d+)')
 
     slider:set_value(tonumber(brightness))
     collectgarbage('collect')
