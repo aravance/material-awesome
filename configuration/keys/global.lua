@@ -125,15 +125,6 @@ local globalKeys =
     end,
     {description = 'open a browser', group = 'launcher'}
   ),
-  -- Open private browser/brave
-  awful.key(
-    {modkey},
-    'p',
-    function()
-      awful.util.spawn_with_shell('brave-browser')
-    end,
-    {description = 'Open Brave', group = 'launcher'}
-  ),
   -- Standard program
   awful.key(
     {modkey},
@@ -316,9 +307,25 @@ local globalKeys =
   ]]
   awful.key(
     {},
+    'XF86AudioPlay',
+    function()
+      awful.spawn('playerctl play-pause')
+    end,
+    {description = 'toggle mute', group = 'hotkeys'}
+  ),
+  awful.key(
+    {},
     'XF86AudioNext',
     function()
-      --
+      awful.spawn('playerctl next')
+    end,
+    {description = 'toggle mute', group = 'hotkeys'}
+  ),
+  awful.key(
+    {},
+    'XF86AudioPrev',
+    function()
+      awful.spawn('playerctl previous')
     end,
     {description = 'toggle mute', group = 'hotkeys'}
   ),
@@ -368,16 +375,6 @@ local globalKeys =
     function()
       awful.util.spawn_with_shell('vm-attach attach')
     end
-  ),
-  -- Emoji typing
-  -- setup info at https://gist.github.com/HikariKnight/8562837d28dec3674dba027c7892e6a5
-  awful.key(
-    {modkey},
-    'e',
-    function()
-      awful.util.spawn_with_shell('emoji-toggle')
-    end,
-    {description = 'Toggle the ibus unimoji engine for writing emojis', group = 'hotkeys'}
   )
 )
 
