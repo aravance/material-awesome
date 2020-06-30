@@ -25,8 +25,10 @@ watch(
   1,
   function(widget, stdout, stderr, exitreason, exitcode)
     local brightness = string.match(stdout, 'current value = +(%d+)')
-
-    slider:set_value(tonumber(brightness))
+    local number = tonumber(brightness)
+    if (number ~= nil) then
+      slider:set_value(tonumber(brightness))
+    end
     collectgarbage('collect')
   end
 )
